@@ -1,7 +1,5 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {ITEMS} from './Items'
-import {action} from "mobx/lib/mobx";
 
 const ShoppingList = observer(class ShoppingList extends React.Component {
     constructor(props) {
@@ -34,7 +32,6 @@ const ShoppingItem = observer(class ShoppingItem extends React.Component {
     }
 
     render() {
-        let cartNumber = this.getCartNumber(this.props.item);
         return (
             <div className="card shopping-item">
                 <div className="card-header">{this.props.item.name}</div>
@@ -43,10 +40,7 @@ const ShoppingItem = observer(class ShoppingItem extends React.Component {
                     <div className="col-12 col-sm-8 row align-items-center align-content-center justify-content-center">
                         <div className="col">数量:</div>
                         <div className="col-7">
-                            <InputNumberComponent
-                                ref={(input) => this.inputValueComponent = input}
-                                item={this.props.item}
-                            />
+                            <InputNumberComponent item={this.props.item}/>
                         </div>
                         <div className="col-12 col-sm">{this.props.item.unit}</div>
                     </div>
@@ -85,11 +79,6 @@ const ShoppingItem = observer(class ShoppingItem extends React.Component {
 });
 
 const InputNumberComponent = observer(class InputNumberComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleNumberChange = this.handleNumberChange.bind(this);
-    }
-
     render() {
         return (
             <span className="input-group">
@@ -111,18 +100,18 @@ const InputNumberComponent = observer(class InputNumberComponent extends React.C
         )
     }
 
-    handleNumberChange(event) {
+    handleNumberChange = (event) => {
         event.target.value = event.target.value < 0 ? 0 : event.target.value;
         this.props.item.count = event.target.value;
-    }
+    };
 
-    handleMinusNumber(event) {
+    handleMinusNumber = (event) =>{
         this.props.item.count > 0 ? this.props.item.count-- : 0;
-    }
+    };
 
-    handlePlusNumber(event) {
+    handlePlusNumber = (event) => {
         this.props.item.count++;
-    }
+    };
 });
 
 export {InputNumberComponent};

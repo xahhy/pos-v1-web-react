@@ -1,11 +1,11 @@
 import {observable, computed, autorun} from 'mobx-react';
-import {extendObservable, action} from 'mobx'
+import {extendObservable} from 'mobx'
 
 export default class MobxStore {
     constructor() {
         extendObservable(this, {
             itemData: {},
-            cartData: {items:[]},
+            cartData: {items: []},
         })
     }
 
@@ -19,20 +19,22 @@ export default class MobxStore {
      * 然后将商品数量置为1
      * @param newItem
      */
-    addToCart(newItem){
-        if(newItem.count <= 0)return;
-        let item = this.cartData.items.filter((item, index) => {return item.barcode === newItem.barcode});
-        if(item.length !== 0){
+    addToCart = (newItem) => {
+        if (newItem.count <= 0) return;
+        let item = this.cartData.items.filter((item, index) => {
+            return item.barcode === newItem.barcode
+        });
+        if (item.length !== 0) {
             item[0].count += newItem.count;
-        }else{
+        } else {
             this.cartData.items.push({...newItem});
         }
         newItem.count = 1;
-    }
+    };
 
-    deleteCartItem(delItem){
+    deleteCartItem = (delItem) => {
         this.cartData.items.remove(delItem)
-    }
+    };
 
 
     //按下的反选
@@ -67,6 +69,6 @@ export default class MobxStore {
                 this.itemData.totalMoney += this.itemData.datas[i].money * this.itemData.datas[i].count;
             }
         }
-    }
+    };
 }
 

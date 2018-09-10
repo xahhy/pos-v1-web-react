@@ -2,29 +2,22 @@ import React from 'react';
 import {InputNumberComponent} from './ShoppingList';
 import {observer} from 'mobx-react';
 
-const ShoppingCart = observer(class ShoppingCart extends React.Component {
-    constructor(props){
-        super(props);
-    }
-    render() {
+const ShoppingCart = observer((props)=>
+    {
         return (
             <div>
-                {this.props.cart && this.props.cart.map(
-                    (item, index) => <ShoppingCartItem
-                        data={this.props.data}
+                {props.cart && props.cart.map(
+                    item => <ShoppingCartItem
+                        data={props.data}
                         key={item.barcode}
                         item={item}
                     />)}
             </div>
         )
     }
-});
+);
 
 const ShoppingCartItem = observer(class ShoppingCartItem extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleDeleteItem = this.handleDeleteItem.bind(this);
-    }
     render() {
         return (
             <div className="card shopping-item">
@@ -48,7 +41,7 @@ const ShoppingCartItem = observer(class ShoppingCartItem extends React.Component
         )
     }
 
-    handleDeleteItem(){
+    handleDeleteItem = () => {
         this.props.data.deleteCartItem(this.props.item);
     }
 });
