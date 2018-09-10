@@ -23,16 +23,20 @@ const ShoppingCartModel = observer(class ShoppingCartModel extends React.Compone
                         />
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                        <button type="button" className="btn btn-primary" onClick={this.purchase.bind(this)}>购买</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" className="btn btn-primary" onClick={this.purchase}>购买</button>
                     </div>
                 </div>
             </div>
         </div>)
     }
     purchase = () =>{
-        debugger;
-    }
+        const items = this.props.cart.filter(item=>item.count > 0).map(item=>{
+            if (item.count > 1) return item.barcode+'-'+item.count;
+            else return item.barcode;
+        });
+        console.log(items);
+        alert(items)
+    };
 });
 export default ShoppingCartModel;
